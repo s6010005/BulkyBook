@@ -12,7 +12,6 @@ namespace BulkyBookWeb.Controllers
         {
             _db = db;
         }
-
         
         public IActionResult Index()
         {
@@ -40,6 +39,7 @@ namespace BulkyBookWeb.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = $"Η κατηγορία {obj.Name} δημιουργήθηκε επιτυχώς";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -73,7 +73,7 @@ namespace BulkyBookWeb.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Η κατηγορία επεξεργάστηκε επιτυχώς";
+                TempData["success"] = $"Η κατηγορία {obj.Name} επεξεργάστηκε επιτυχώς";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -108,7 +108,7 @@ namespace BulkyBookWeb.Controllers
 
             _db.Categories.Remove(obj);
             _db.SaveChanges();
-            TempData["success"] = "Η κατηγορία διαγράφηκε";
+            TempData["success"] = $"Η κατηγορία {obj.Name} διαγράφηκε";
             return RedirectToAction("Index");
 
         }
