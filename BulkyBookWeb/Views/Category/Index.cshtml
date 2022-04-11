@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Κατηγορίες";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Κατηγορίες</h2>
+		</div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+               <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη κατηγορίας
+			</a>
+		</div>
+	</div>
+    <br /><br />
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>
+                Κατηγορία
+            </th>
+            <th>
+                Σειρά
+            </th>
+            <th>
+                Επεξεργασία
+            </th>
+            <th>
+                Διαγραφή
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td width="50%">
+                    @obj.Name
+                </td>
+                <td width="50%">
+                    @obj.DisplayOrder
+                </td>
+                <td width="40%">
+
+                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
+                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
+                </td>
+                <td width="50%">
+                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
+                        class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+</div>
+
