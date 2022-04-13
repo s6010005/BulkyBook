@@ -1,4 +1,5 @@
 ﻿using BulkyBook.DataAccess;
+using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +7,9 @@ namespace BulkyBookWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ICategoryRepository _db;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(ICategoryRepository db)
         {
             _db = db;
         }
@@ -52,16 +53,16 @@ namespace BulkyBookWeb.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.Categories.Find(id);
-            //var categoryFromDbFirst = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            //var categoryFromDb = _db.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(u=>u.Id==id);
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
-            if (categoryFromDb == null)
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
 
-            return View(categoryFromDb);
+            return View(categoryFromDbFirst);
         }
 
         //POST
