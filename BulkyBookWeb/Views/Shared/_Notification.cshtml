@@ -2,17 +2,27 @@
 @if(TempData["success"] != null)
 {
 
-    <div class="alert alert-dismissible alert-success">
+@*    <div class="alert alert-dismissible alert-success">
   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   <p class="mb-0">@TempData["success"]</p>
-</div>
+</div>*@
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+	</script>
 }
 
 @if(TempData["error"] != null)
 {
 
-    <div class="alert alert-dismissible alert-danger">
+@*    <div class="alert alert-dismissible alert-danger">
   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   <p class="mb-0">@TempData["error"]</p>
-</div>
+</div>*@
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.error('@TempData["error"]');
+	</script>
 }
