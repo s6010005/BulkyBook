@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "Βιβλίο";
+}
+
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Βιβλίο</h2>
+		</div>
+        <div class="col-6 text-end">
+            <a asp-controller="ProductBook" asp-action="Upsert" class="btn btn-primary">
+               <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη βιβλίου
+			</a>
+		</div>
+	</div>
+    <br /><br />
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th>Τίτλος</th>
+            <th>Συγγραφέας</th>
+            <th>ISBN</th>
+            <th>Κατηγορία</th>
+            <th>Ημερομηνία έκδοσης</th>
+            <th>Τύπος εξωφύλλου</th>
+            <th>Τιμή</th>
+
+        </tr>
+    </thead>
+    <tbody>
+@*        @foreach(var obj in Model)
+        {
+            <tr>
+                <td width="90%">
+                    @obj.Name
+                </td>
+                <td width="5%">
+
+                    <a asp-controller="CoverType" asp-action="Edit" asp-route-id="@obj.Id"
+                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
+                </td>
+                <td width="5%">
+                    <a asp-controller="CoverType" asp-action="Delete" asp-route-id="@obj.Id"
+                        class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
+                </td>
+            </tr>
+        }*@
+    </tbody>
+
+
+</table>
+</div>
+
