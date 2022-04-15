@@ -34,7 +34,7 @@ namespace BulkyBookWeb.Controllers
                     Text = c.Name,
                     Value = c.Id.ToString()
                 }),
-                overTypeList = _unitOfWork.CoverType.GetAll().Select(
+                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
                 c => new SelectListItem
                 {
                     Text = c.Name,
@@ -77,13 +77,13 @@ namespace BulkyBookWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(ProductBook obj)
+        public IActionResult Upsert(ProductBookVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.ProductBook.Update(obj);
+                //_unitOfWork.ProductBook.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"] = $"Το βιβλίο {obj.Title} επεξεργάστηκε επιτυχώς";
+                TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} επεξεργάστηκε επιτυχώς";
                 return RedirectToAction("Index");
             }
             return View(obj);

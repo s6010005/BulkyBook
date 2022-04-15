@@ -4,10 +4,10 @@
     ViewData["Title"] = "Επεξεργασία";
 }
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
 	<div class="border p-3 mt-4">
 		<div class="row pb-2">
-			<h2 class="text-primary">Επεξεργασία βιβλίου</h2>
+			<h2 class="text-primary">@(Model.ProductBook.Id!=0?"Επεξεργασία": "Καταχώρηση νέου") βιβλίου</h2>
 			<hr />
 		</div>
 		@*<div asp-validation-summary="All"></div>*@
@@ -22,47 +22,51 @@
 			<span asp-validation-for="ProductBook.Description" class="text-danger"></span>
 		</div>
 		
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.Author"></label>
 			<input asp-for="ProductBook.Author" class="form-control" />
 			<span asp-validation-for="ProductBook.Author" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.DatePublished"></label>
 			<input type="date" asp-for="ProductBook.DatePublished" class="form-control" />
 			<span asp-validation-for="ProductBook.DatePublished" class="text-danger"></span>
 		</div>
-				<div class="mb-3">
+				<div class="mb-3 col-6">
 			<label asp-for="ProductBook.ISBN"></label>
 			<input asp-for="ProductBook.ISBN" class="form-control" />
 			<span asp-validation-for="ProductBook.ISBN" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.ListPrice"></label>
 			<input asp-for="ProductBook.ListPrice" class="form-control" />
 			<span asp-validation-for="ProductBook.ListPrice" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.Price"></label>
 			<input asp-for="ProductBook.Price" class="form-control" />
 			<span asp-validation-for="ProductBook.Price" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.Price20"></label>
 			<input asp-for="ProductBook.Price20" class="form-control" />
 			<span asp-validation-for="ProductBook.Price20" class="text-danger"></span>
-		</div>
-		<div class="mb-3">
+		</div> 
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.Price50"></label>
 			<input asp-for="ProductBook.Price50" class="form-control" />
 			<span asp-validation-for="ProductBook.Price50" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.Price100"></label>
 			<input asp-for="ProductBook.Price100" class="form-control" />
 			<span asp-validation-for="ProductBook.Price100" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
+			<label asp-for="ProductBook.ImageUrl"></label>
+			<input type="file" class="form-control" />
+		</div>
+		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.CategoryId"></label>
 			<select asp-for="ProductBook.CategoryId" asp-items="@Model.CategoryList" class="form-select" >
 				<option disabled selected>--Επιλέξτε κατηγορία--</option>
@@ -76,10 +80,20 @@
 			</select>
 			<span asp-validation-for="ProductBook.CoverTypeId" class="text-danger"></span>
 		</div>
-		<button type="submit" class="btn btn-success" >Αποθήκευση</button>
+		<div class="col-12"> 
+			@if (Model.ProductBook.Id != 0)
+			{
+				<button type="submit" class="btn btn-success" style="width:150px">Αποθήκευση</button>
+			}
+			else
+			{
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-success" style="width:150px">Δημιουργία</button>
+			}
+
 		<a asp-controller="ProductBook" asp-action="Index" class="btn btn-danger" >
 			Ακύρωση
 		</a>
+		</div>
 	</div>
 </form>
 
