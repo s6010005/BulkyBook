@@ -5,7 +5,7 @@
 }
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
-	<div class="border p-3 mt-4">
+	<div class="border p-3 mt-4 row">
 		<div class="row pb-2">
 			<h2 class="text-primary">@(Model.ProductBook.Id!=0?"Επεξεργασία": "Καταχώρηση νέου") βιβλίου</h2>
 			<hr />
@@ -64,7 +64,7 @@
 		</div>
 		<div class="mb-3">
 			<label asp-for="ProductBook.ImageUrl"></label>
-			<input type="file" class="form-control" />
+			<input type="file" id="uploadImg" name="file" class="form-control" />
 		</div>
 		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.CategoryId"></label>
@@ -83,11 +83,11 @@
 		<div class="col-12"> 
 			@if (Model.ProductBook.Id != 0)
 			{
-				<button type="submit" class="btn btn-success" style="width:150px">Αποθήκευση</button>
+				<button type="submit" class="btn btn-success" >Αποθήκευση</button>
 			}
 			else
 			{
-				<button type="submit" onclick="return ValidateInput()" class="btn btn-success" style="width:150px">Δημιουργία</button>
+				<button type="submit" onclick="return ValidateInput()" class="btn btn-success" >Δημιουργία</button>
 			}
 
 		<a asp-controller="ProductBook" asp-action="Index" class="btn btn-danger" >
@@ -97,8 +97,42 @@
 	</div>
 </form>
 
+
 @section Scripts{
 	@{
-		<partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 	}
+<script>
+    
+	function ValidateInput(){
+		var elmId = $("#uploadImg").val();
+            if(elmId=="" ){
+						Swal.fire({
+			  icon: 'error',
+			  title: 'Oops...',
+			  text: 'Παρακαλώ επιλέξτε φωτογραφία',
+			})
+			return false;
+			};
+		return true;	
+	}
+
+	//	function ValidateInput(){
+	//	if(document.getElementById("uploadBox").value==""){
+	//		Swal.fire({
+	//		  icon: 'error',
+	//		  title: 'Oops...',
+	//		  text: 'Please upload an Image!',
+	//		});
+	//		return false;
+	//	}
+	//	return true;
+	//}
+	
+
+</script>
 }
+
+
+
+

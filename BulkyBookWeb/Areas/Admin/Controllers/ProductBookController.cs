@@ -10,10 +10,12 @@ namespace BulkyBookWeb.Controllers
     public class ProductBookController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProductBookController(IUnitOfWork unitOfWork)
+        public ProductBookController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _hostEnvironment = hostEnvironment;
         }
         
         public IActionResult Index()
@@ -79,9 +81,24 @@ namespace BulkyBookWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductBookVM obj, IFormFile? file)
         {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(wwwRootPath, @"images\books");
+                var extension = Path.GetExtension(file.FileName);
+
+                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStreams);
+                }
+                obj.ProductBook.ImageUrl = @"\images\products\" + fileName + extension;
+
+            }
             if (ModelState.IsValid)
             {
-                //_unitOfWork.ProductBook.Update(obj);
+                _unitOfWork.ProductBook.Add(obj.ProductBook);
                 _unitOfWork.Save();
                 TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} επεξεργάστηκε επιτυχώς";
                 return RedirectToAction("Index");

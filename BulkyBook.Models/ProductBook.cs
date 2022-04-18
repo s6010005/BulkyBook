@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace BulkyBook.Models
 {
@@ -48,19 +48,22 @@ namespace BulkyBook.Models
         [Display(Name = "Τιμή για 100+ τεμάχια")]
         [Range(1, 10000)]
         public double Price100 { get; set; }
-
+        [ValidateNever]
         public string ImageUrl { get; set; }
 
         [Required]
         [Display(Name = "Κατηγορία")]
+        
         public int CategoryId { get; set; }
         //[ForeignKey("CategoryId")] not necessary
+        [ValidateNever]
         public Category Category { get; set; }
 
         [Required]
         [Display(Name = "Τύπος εξωφύλλου")]
+        
         public int CoverTypeId { get; set; }
-
+        [ValidateNever]
         public CoverType CoverType { get; set; }
 
     }
