@@ -20,8 +20,9 @@ namespace BulkyBookWeb.Controllers
         
         public IActionResult Index()
         {
-            IEnumerable<ProductBook> objProductBookList = _unitOfWork.ProductBook.GetAll();
-            return View(objProductBookList);
+            //IEnumerable<ProductBook> objProductBookList = _unitOfWork.ProductBook.GetAll();
+            //return View(objProductBookList);
+            return View();
         }
 
         //GET
@@ -81,28 +82,30 @@ namespace BulkyBookWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductBookVM obj, IFormFile? file)
         {
-            string wwwRootPath = _hostEnvironment.WebRootPath;
-
-            if (file != null)
-            {
-                string fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(wwwRootPath, @"images\books");
-                var extension = Path.GetExtension(file.FileName);
-
-                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-                {
-                    file.CopyTo(fileStreams);
-                }
-                obj.ProductBook.ImageUrl = @"\images\products\" + fileName + extension;
-
-            }
+            
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images\books");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.ProductBook.ImageUrl = @"\images\products\" + fileName + extension;
+
+                }
+
                 _unitOfWork.ProductBook.Add(obj.ProductBook);
                 _unitOfWork.Save();
                 TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} επεξεργάστηκε επιτυχώς";
                 return RedirectToAction("Index");
             }
+            
             return View(obj);
         }
 
@@ -139,5 +142,20 @@ namespace BulkyBookWeb.Controllers
             return RedirectToAction("Index");
 
         }
+
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.ProductBook.GetAll(includeProperties: "Category,CoverType");
+
+            return Json(new { data = productList });
+        }
+
+
+        #endregion
     }
+
 }
