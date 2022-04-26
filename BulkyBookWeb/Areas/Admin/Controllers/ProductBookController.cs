@@ -131,40 +131,6 @@ namespace BulkyBookWeb.Controllers
             return View(obj);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var productBookFromDbFirst = _unitOfWork.ProductBook.GetFirstOrDefault(u => u.Id == id);
-
-            if (productBookFromDbFirst == null)
-            {
-                return NotFound();
-            }
-
-            return View(productBookFromDbFirst);
-        }
-
-        //POST
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
-        {
-            var obj = _unitOfWork.ProductBook.GetFirstOrDefault(u => u.Id == id);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.ProductBook.Remove(obj);
-            _unitOfWork.Save();
-            TempData["success"] = $"Το βιβλίο  {obj.Title} διαγράφηκε";
-            return RedirectToAction("Index");
-
-        }
-
 
         #region API CALLS
 
@@ -176,6 +142,27 @@ namespace BulkyBookWeb.Controllers
             return Json(new { data = productList });
         }
 
+        //POST
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var obj = _unitOfWork.ProductBook.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
+            {
+                return Json(new { success = false, message = "Σφάλμα κατα τη διαγραφή του βιβλίου" });
+            }
+
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.ProductBook.Remove(obj);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = $"Το βιβλίο {obj.Title} διαγράφηκε" });
+
+        }
 
         #endregion
     }

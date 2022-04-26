@@ -35,8 +35,7 @@ function loadDataTable() {
                         <div class="w-75 btn-group" role="group">
                         <a href="/Admin/ProductBook/Upsert?id=${data}"
                         class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
-
-                        <a
+                        <a onClick=Delete('/Admin/ProductBook/Delete/${data}')
                         class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
 					</div>
                         `
@@ -47,4 +46,34 @@ function loadDataTable() {
             
         ]
     });
+}
+
+function Delete(url) {
+    Swal.fire({
+        title: 'ΔΙΑΓΡΑΦΗ',
+        text: 'Είστε σίγουροι οτι θέλετε να διαγράψετε την εγγραφή;',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Όχι',
+
+        confirmButtonText: 'Ναί'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function (data) {
+                    if (data.success) {
+                        dataTable.ajax.reload();
+                        toastr.success(data.message);
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            })
+        }
+    })
 }
