@@ -71,6 +71,8 @@ namespace BulkyBookWeb.Controllers
             else
             {
                 //update book
+                productBookVM.ProductBook = _unitOfWork.ProductBook.GetFirstOrDefault(u => u.Id == id);
+                return View(productBookVM);
             }
 
 
@@ -92,17 +94,37 @@ namespace BulkyBookWeb.Controllers
                     var uploads = Path.Combine(wwwRootPath, @"images\books");
                     var extension = Path.GetExtension(file.FileName);
 
+                    //Delete existing image
+                    if (obj.ProductBook.ImageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.ProductBook.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.ProductBook.ImageUrl = @"\images\products\" + fileName + extension;
+                    obj.ProductBook.ImageUrl = @"\images\books\" + fileName + extension;
 
                 }
 
-                _unitOfWork.ProductBook.Add(obj.ProductBook);
+                if (obj.ProductBook.Id == 0)
+                {
+                    _unitOfWork.ProductBook.Add(obj.ProductBook);
+                    TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} προστέθηκε επιτυχώς";
+                }
+                else
+                {
+                    _unitOfWork.ProductBook.Update(obj.ProductBook);
+                    TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} επεξεργάστηκε επιτυχώς";
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = $"Το βιβλίο {obj.ProductBook.Title} επεξεργάστηκε επιτυχώς";
+                
                 return RedirectToAction("Index");
             }
             

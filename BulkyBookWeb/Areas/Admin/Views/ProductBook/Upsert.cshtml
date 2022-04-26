@@ -5,7 +5,9 @@
 }
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
-	<div class="border p-3 mt-4 row">
+	<input asp-for="ProductBook.Id" hidden />
+	<input asp-for="ProductBook.ImageUrl" hidden />
+	<div class=" p-3 mt-4 row">
 		<div class="row pb-2">
 			<h2 class="text-primary">@(Model.ProductBook.Id!=0?"Επεξεργασία": "Καταχώρηση νέου") βιβλίου</h2>
 			<hr />
@@ -29,7 +31,7 @@
 		</div>
 		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.DatePublished"></label>
-			<input type="date" asp-for="ProductBook.DatePublished" class="form-control" />
+			<input type="date"  asp-for="ProductBook.DatePublished" class="form-control" />
 			<span asp-validation-for="ProductBook.DatePublished" class="text-danger"></span>
 		</div>
 				<div class="mb-3 col-6">
@@ -62,10 +64,7 @@
 			<input asp-for="ProductBook.Price100" class="form-control" />
 			<span asp-validation-for="ProductBook.Price100" class="text-danger"></span>
 		</div>
-		<div class="mb-3">
-			<label asp-for="ProductBook.ImageUrl"></label>
-			<input type="file" id="uploadImg" name="file" class="form-control" />
-		</div>
+		
 		<div class="mb-3 col-6">
 			<label asp-for="ProductBook.CategoryId"></label>
 			<select asp-for="ProductBook.CategoryId" asp-items="@Model.CategoryList" class="form-select" >
@@ -79,6 +78,14 @@
 				<option disabled selected>--Επιλέξτε τύπο εξωφύλλου--</option>
 			</select>
 			<span asp-validation-for="ProductBook.CoverTypeId" class="text-danger"></span>
+		</div>
+		<div class="mb-3 col-11">
+			<label asp-for="ProductBook.ImageUrl"></label>
+			<input type="file" id="uploadImg" name="file" class="form-control" />
+		</div>
+		<div class="col-1 pt-4">
+			<img src="@Model.ProductBook.ImageUrl"
+			width="60px" style="border-radius:5px; border:1px solid #bbb9b9" />
 		</div>
 		<div class="col-12"> 
 			@if (Model.ProductBook.Id != 0)
