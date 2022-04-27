@@ -19,8 +19,8 @@ namespace BulkyBook.Models
         [Display(Name = "Περιγραφή")]
         public string Description { get; set; }
         [Display(Name = "Ημερομηνία κυκλοφορίας")]
-        [DataType(DataType.Date)]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DataType(DataType.Date)]
+        //Application_Start[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:mm/dd/yyyy}")]
         public DateTime DatePublished { get; set; } = DateTime.Now;
         [Required]
         public string ISBN { get; set; }
@@ -51,6 +51,17 @@ namespace BulkyBook.Models
         [Range(1, 10000)]
         public double Price100 { get; set; }
 
+        [Range(1, 10000)]
+        [Display(Name = "Σελίδες")]
+        public int Pages { get; set; }
+
+        [Range(0, 100)]
+        [Display(Name = "Έκπτωση")]
+        public int Discount { get; set; }
+
+        [Display(Name = "Διαστάσεις")]
+        public string Dimensions { get; set; }
+
         [Display(Name = "Εικόνα εξωφύλλου")]
         [ValidateNever]
         public string ImageUrl { get; set; }
@@ -69,5 +80,9 @@ namespace BulkyBook.Models
         [ValidateNever]
         public CoverType CoverType { get; set; }
 
+        [Display(Name = "Διαθεσιμότητα")]
+        public int AvailabilityId { get; set; }
+        [ValidateNever]
+        public Availability Availability { get; set; }
     }
 }

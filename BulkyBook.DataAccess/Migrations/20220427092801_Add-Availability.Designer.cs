@@ -4,6 +4,7 @@ using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220427092801_Add-Availability")]
+    partial class AddAvailability
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,9 +94,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AvailabilityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -147,8 +146,6 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvailabilityId");
-
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CoverTypeId");
@@ -158,12 +155,6 @@ namespace BulkyBook.DataAccess.Migrations
 
             modelBuilder.Entity("BulkyBook.Models.ProductBook", b =>
                 {
-                    b.HasOne("BulkyBook.Models.Availability", "Availability")
-                        .WithMany()
-                        .HasForeignKey("AvailabilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BulkyBook.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -175,8 +166,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .HasForeignKey("CoverTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Availability");
 
                     b.Navigation("Category");
 

@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace BulkyBook.DataAccess.Repository
 {
-    public class Category1Repository : Repository<Category>, ICategoryRepository
+    public class AvailabilityRepository : Repository<Availability>, IAvailabilityRepository
     {
         private ApplicationDbContext _db;
 
-        public Category1Repository(ApplicationDbContext db) : base(db)
+        public AvailabilityRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
 
-        public void Update(Category obj)
+        public void Update(Availability obj)
         {
-            _db.Categories.Update(obj);
+            _db.AvailabilityTypes.Update(obj);
         }
     }
 }

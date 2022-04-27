@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Category>
+﻿@model IEnumerable<Category>
 
 @{
     ViewData["Title"] = "Κατηγορίες";
@@ -11,55 +10,145 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Κατηγορίες</h2>
-		</div>
+        </div>
         <div class="col-6 text-end">
             <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-               <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη κατηγορίας
-			</a>
-		</div>
-	</div>
+                <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη κατηγορίας
+            </a>
+        </div>
+    </div>
     <br /><br />
-<table class="table table-striped" >
-    <thead>
-        <tr>
-            <th>
-                Κατηγορία
-            </th>
-            <th>
-                Σειρά
-            </th>
-            <th>
-                Επεξεργασία
-            </th>
-            <th>
-                Διαγραφή
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var obj in Model)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td width="50%">
-                    @obj.Name
-                </td>
-                <td width="50%">
-                    @obj.DisplayOrder
-                </td>
-                <td width="40%">
-
-                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
-                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
-                </td>
-                <td width="50%">
-                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
-                        class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
-                </td>
+                <th>
+                    Κατηγορία
+                </th>
+                <th>
+                    Σειρά
+                </th>
+                <th>
+                    Επεξεργασία
+                </th>
+                <th>
+                    Διαγραφή
+                </th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td width="50%">
+                        @obj.Name
+                    </td>
+                    <td width="50%">
+                        @obj.DisplayOrder
+                    </td>
+                    <td width="40%">
+
+                        <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id"
+                       class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td width="50%">
+                        @*                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id"
+                            class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>*@
+                            <a onClick=Delete('/Admin/Category/Delete/@obj.Id')
+                        class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
+                        @*<button type="submit" onClick=Delete('/Admin/Category/Delete/@obj.Id') class="btn btn-danger">Διαγραφή</button>*@
+                        @*<button type="submit" onclick="return Delete('/Admin/Category/Delete/@obj.Id')" class="btn btn-success">Δημιουργία</button>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
 
 
-</table>
+    </table>
 </div>
 
+@section Scripts{
+	@{
+    <partial name="_ValidationScriptsPartial" />
+	}
+
+<script>
+
+//        const swalWithBootstrapButtons = Swal.mixin({
+//      customClass: {
+//        confirmButton: 'btn btn-success',
+//        cancelButton: 'btn btn-danger'
+//      },
+//      buttonsStyling: false
+//    })
+
+//    function Delete3(url) {
+//    Swal.fire({
+//      title: 'ΔΙΑΓΡΑΦΗ',
+//      text: "Είστε σίγουροι οτι θέλετε να διαγράψετε την εγγραφή;",
+//      icon: 'warning',
+//      showCancelButton: true,
+//            confirmButtonColor: '#3085d6',
+//            cancelButtonColor: '#d33',
+//            cancelButtonText: 'Όχι',
+//            confirmButtonText: 'Ναί'
+//    }).then((result) => {
+//      if (result.isConfirmed) {
+//          $.ajax({
+//                    url: url,
+//                    type: 'DELETE',
+//                    success: function (data) {
+//                        if (data.success) {
+           
+//                   swalWithBootstrapButtons.fire(
+//          'Η εγγραφή διαγράφηκε!',
+//          'data.message',
+//          'success'
+//        )
+//               location.reload();
+//                        }
+//                        else {
+//                            toastr.error(data.message);
+//                        }
+//                    }
+//                })
+
+
+
+
+
+
+//      } 
+//    })
+//}
+
+        function Delete(url) {
+        Swal.fire({
+            title: 'ΔΙΑΓΡΑΦΗ',
+            text: 'Είστε σίγουροι οτι θέλετε να διαγράψετε την εγγραφή;',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Όχι',
+            confirmButtonText: 'Ναί'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function (data) {
+                        if (data.success) {
+           location.reload();
+
+                            //toastr.success(data.message);
+                        }
+                        else {
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+}

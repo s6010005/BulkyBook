@@ -80,38 +80,55 @@ namespace BulkyBookWeb.Controllers
             return View(obj);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            //var categoryFromDb = _db.Categories.Find(id);
-            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //var categoryFromDb = _db.Categories.Find(id);
+        //    var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
 
-            if (categoryFromDbFirst == null)
-            {
-                return NotFound();
-            }
+        //    if (categoryFromDbFirst == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(categoryFromDbFirst);
-        }
+        //    return View(categoryFromDbFirst);
+        //}
+
+        ////POST
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeletePOST(int? id)
+        //{
+        //    var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _unitOfWork.Category.Remove(obj);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = $"Η κατηγορία {obj.Name} διαγράφηκε";
+        //    return RedirectToAction("Index");
+
+        //}
 
         //POST
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        [HttpDelete]
+        public IActionResult Delete(int? id)
         {
             var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Σφάλμα κατα τη διαγραφή της κατηγορίας βιβλίου" });
             }
 
             _unitOfWork.Category.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"] = $"Η κατηγορία {obj.Name} διαγράφηκε";
-            return RedirectToAction("Index");
+            TempData["success"] = $"Η κατηγορία βιβλίου {obj.Name} διαγράφηκε";
+            return Json(new { success = true, message = $"Η κατηγορία βιβλίου {obj.Name} διαγράφηκε" });
 
         }
     }

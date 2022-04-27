@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using BulkyBook.DataAccess.Repository.IRepository;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     ));
 //builder.Services.AddScoped<ICategoryRepository, BulkyBook.DataAccess.Repository.CategoryRepository>();
 //builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryRepository, Category1Repository>();
+builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICoverTypeRepository, CoverTypeRepository>();
 builder.Services.AddScoped<IProductBookRepository, ProductBookRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

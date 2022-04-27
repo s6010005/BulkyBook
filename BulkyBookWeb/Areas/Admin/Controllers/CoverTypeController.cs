@@ -78,38 +78,57 @@ namespace BulkyBookWeb.Controllers
             return View(obj);
         }
 
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var coverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
+
+        //    if (coverTypeFromDbFirst == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(coverTypeFromDbFirst);
+        //}
+
+        ////POST
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeletePOST(int? id)
+        //{
+        //    var obj = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _unitOfWork.CoverType.Remove(obj);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = $"Ο τύπος εξωφύλλου {obj.Name} διαγράφηκε";
+        //    return RedirectToAction("Index");
+
+        //}
+
+        #region API CALLS
+        //POST
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var coverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
-
-            if (coverTypeFromDbFirst == null)
-            {
-                return NotFound();
-            }
-
-            return View(coverTypeFromDbFirst);
-        }
-
-        //POST
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
-        {
-            var obj = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
+            var obj = _unitOfWork.Availability.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Σφάλμα κατα τη διαγραφή του τύπου εξωφύλλου" });
             }
 
-            _unitOfWork.CoverType.Remove(obj);
+            _unitOfWork.Availability.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = $"Ο τύπος εξωφύλλου {obj.Name} διαγράφηκε";
-            return RedirectToAction("Index");
+            return Json(new { success = true, message = $"Ο τύπος εξωφύλλου {obj.Name} διαγράφηκε" });
 
         }
+        #endregion
     }
 }

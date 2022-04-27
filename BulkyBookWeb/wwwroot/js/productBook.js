@@ -10,6 +10,16 @@ function loadDataTable() {
         "ajax": {
             "url": "/Admin/ProductBook/GetAll"
         },
+        //"pageLength": 2,
+        "language": {
+            "paginate": {
+                "previous": "Προηγούμενη",
+                "next": "Επόμενη"
+            },
+            "info": "_START_ εως _END_ από τις συνολικά _TOTAL_ εγγραφές",
+            "search": "Αναζήτηση:",
+            "lengthMenu": "_MENU_ εγγραφές",
+        },
         "columnDefs": [
             { "orderable": false, "targets": 0 },
             { "orderable": false, "targets": 8 }

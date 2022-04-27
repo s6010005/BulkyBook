@@ -42,6 +42,12 @@ namespace BulkyBookWeb.Controllers
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
+                }),
+                AvailabilityList = _unitOfWork.Availability.GetAll().Select(
+                c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
                 })
             };
 

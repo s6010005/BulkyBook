@@ -25,3 +25,8 @@ body {
     white-space: nowrap;
     line-height: 60px;
 }
+
+.homeBooksImages {
+    min-height: 100px;
+    min-height: 200px;
+}

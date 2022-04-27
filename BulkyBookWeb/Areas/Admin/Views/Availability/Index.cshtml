@@ -1,8 +1,8 @@
 ﻿
-@model IEnumerable<CoverType>
+@model IEnumerable<Availability>
 
 @{
-    ViewData["Title"] = "Τύπος εξωφύλλου";
+    ViewData["Title"] = "Διαθεσιμότητα";
 }
 
 
@@ -10,11 +10,11 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Τύπος εξωφύλλου</h2>
+            <h2 class="text-primary">Διαθεσιμότητα</h2>
 		</div>
         <div class="col-6 text-end">
-            <a asp-controller="CoverType" asp-action="Create" class="btn btn-primary">
-               <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη τύπου εξωφύλλου
+            <a asp-controller="Availability" asp-action="Create" class="btn btn-primary">
+               <i class="bi bi-plus-circle"></i> &nbsp; Προσθήκη τύπου διαθεσιμότητας
 			</a>
 		</div>
 	</div>
@@ -23,7 +23,7 @@
     <thead>
         <tr>
             <th>
-                Τύπος εξωφύλλου
+                Διαθεσιμότητα
             </th>
             <th>
                 Επεξεργασία
@@ -42,11 +42,12 @@
                 </td>
                 <td width="5%">
 
-                    <a asp-controller="CoverType" asp-action="Edit" asp-route-id="@obj.Id"
+                    <a asp-controller="Availability" asp-action="Edit" asp-route-id="@obj.Id"
                         class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i></a>
                 </td>
                 <td width="5%">
-                    <a onClick=Delete('/Admin/CoverType/Delete/@obj.Id')
+                    @*<button type="submit" onClick=Delete('/Admin/Availability/Delete/@obj.Id') class="btn btn-danger">Διαγραφή</button>*@
+                    <a onClick=Delete('/Admin/Availability/Delete/@obj.Id')
                         class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i></a>
                 </td>
             </tr>
