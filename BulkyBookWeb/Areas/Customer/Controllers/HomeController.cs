@@ -1,5 +1,6 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,9 +19,20 @@ namespace BulkyBookWeb.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<ProductBook> productList = _unitOfWork.ProductBook.GetAll(includeProperties: "Category,CoverType");
+            IEnumerable<ProductBook> productList = _unitOfWork.ProductBook.GetAll(includeProperties: "Category,CoverType,Availability");
 
             return View(productList);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            ShoppingCart cartObj = new()
+            {
+                Count = 1,
+                ProductBook = _unitOfWork.ProductBook.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category,CoverType,Availability"),
+            };
+
+            return View(cartObj);
         }
 
         public IActionResult Privacy()
