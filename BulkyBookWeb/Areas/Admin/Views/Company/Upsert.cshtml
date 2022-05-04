@@ -1,0 +1,84 @@
+﻿@model Company
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="Id" hidden />
+	
+	<div class="row">
+		<div class="col-10">
+			<div class="border p-3 mt-4 row">
+		<div class="col-12 pb-2">
+			<h2 class="text-primary">@(Model.Id!=0?"Επεξερασία": "Δημιουργία")  εταιρείας</h2>
+			<hr />
+		</div>
+		@*<div asp-validation-summary="All"></div>*@
+		<div class="mb-3">
+			<label asp-for="Name"></label>
+			<input asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="PhoneNumber"></label>
+			<input asp-for="PhoneNumber" class="form-control" />
+			<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="PhoneNumberMobile"></label>
+			<input asp-for="PhoneNumberMobile" class="form-control" />
+			<span asp-validation-for="PhoneNumberMobile" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="StreetAddress"></label>
+			<input asp-for="StreetAddress" class="form-control" />
+			<span asp-validation-for="StreetAddress" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="City"></label>
+			<input asp-for="City" class="form-control" />
+			<span asp-validation-for="City" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Email"></label>
+			<input asp-for="Email" class="form-control" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="PostalCode"></label>
+			<input asp-for="PostalCode" class="form-control" />
+			<span asp-validation-for="PostalCode" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="TIN"></label>
+			<input asp-for="TIN" class="form-control" />
+			<span asp-validation-for="TIN" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="RegistrationDate"></label>
+			<input type="date" asp-for="RegistrationDate" class="form-control" />
+			<span asp-validation-for="RegistrationDate" class="text-danger"></span>
+		</div>
+		
+		<div class="col-12">
+			@if (Model.Id != 0)
+			{
+				<button type="submit" class="btn btn-primary" style="width:150px">Επεξεργασία</button>
+			}
+			else
+			{
+				<button type="submit" class="btn btn-primary" style="width:150px">Δημιουργία</button>
+			}
+			<a asp-controller="Company" asp-action="Index" class="btn btn-secondary" style="width:150px">
+				Πίσω
+			</a>
+		</div>
+
+	</div>
+		</div>
+		
+	</div>
+</form>
+
+@section Scripts{
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

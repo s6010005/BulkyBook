@@ -4,6 +4,7 @@ using BulkyBook.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220430205746_Add_registrationDate_To_Company")]
+    partial class Add_registrationDate_To_Company
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,9 +96,6 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TIN")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

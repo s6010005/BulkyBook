@@ -18,7 +18,7 @@
   <div class="container-fluid">
     @*<a class="navbar-brand" href="#">BulkyBookDemo</a>*@
     <a class="navbar-brand" href="#">
-      <img src="/images/logo/bookBulb.png" alt="" height="30">
+      <img src="/images/logo/bookBulp2.png" alt="" height="30">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -27,20 +27,22 @@
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Αρχική</a>
+          <a class="nav-link text-white" asp-area="Customer" asp-controller="Home" asp-action="Index">Αρχική</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-          <div class="dropdown-menu">
+          <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+          <div class="dropdown-menu ">
                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Κατηγορίες</a>
             <a class="dropdown-item" asp-area="Admin" asp-controller="CoverType" asp-action="Index">Τύποι εξωφύλλου</a>
             <a class="dropdown-item" asp-area="Admin" asp-controller="ProductBook" asp-action="Index">Βιβλία</a>
             <a class="dropdown-item" asp-area="Admin" asp-controller="Availability" asp-action="Index">Διαθεσιμότητα</a>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index">Εταιρείες</a>
           </div>
         </li>
 
 
       </ul>
+      <partial name="_LoginPartial"/>
 @*      <form class="d-flex">
         <input class="form-control me-sm-2" type="text" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
